@@ -1,6 +1,11 @@
 const express = require('express'); // Import express library
 const router = express.Router(); // Create a router object
+const { createClient } = require('@supabase/supabase-js');
 
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 // Function to capture visitor data
 function captureVisitorData(req) {
   return {
