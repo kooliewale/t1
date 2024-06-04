@@ -10,32 +10,24 @@ const IP='http://127.0.0.1';
 const PROJECT=process.env.PROJECT||'KT';
 const VERSION=process.env.VERSION|'v0.0.1';
 const serverStartTime = new Date();  
+const { createClient } = require('@supabase/supabase-js');
 
-const DB_LINK=require('./db_connect.js');
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(bodyParser.json());
 app.use(cors());  
 
 const logRequestAndCaptureData = async (req, res, next) => {
-  console.log(`--- Request Details ---`);
-  console.log(`Method: ${req.method}`);
-  console.log(`URL: ${req.url}`);
 
-  // Capture relevant data for visitor tracking (replace with your selection)
   const visitorData = {
     method: req.method,
     url: req.url,
     IP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     userAgent: req.headers['user-agent'],
   };
-
-  // Call DB_LINK logic (assuming it's a function that handles data storage)
-  try {
-    await DB_LINK(visitorData); // Pass the filtered visitorData object
-    next();
-  } catch (error) {
-    console.error('Error saving visitor data:', error);
-    // Handle errors appropriately (e.g., send error response)
-  }
+console.log(visitorData);
 };
 
 app.use(logRequestAndCaptureData);
