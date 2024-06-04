@@ -26,9 +26,9 @@ function captureVisitorData(req) {
 
 // Supabase connection (replace with your Supabase initialization)
 const { createClient } = require('@supabase/supabase-js');
-const supabaseUrl = 'YOUR_SUPABASE_URL'; // Replace with your Supabase URL
-const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your Supabase Anon Key
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Router middleware to capture data on all requests
 router.use((req, res, next) => {
