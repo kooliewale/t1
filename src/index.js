@@ -15,24 +15,30 @@ const DB_LINK=require('./db_connect.js');
 app.use(bodyParser.json());
 app.use(cors());  
 
-
-
-// Middleware function to log details for all requests
-const logRequest = (req, res, next) => {
+const logRequestAndCaptureData = async (req, res, next) => {
   console.log(`--- Request Details ---`);
   console.log(`Method: ${req.method}`);
   console.log(`URL: ${req.url}`);
-  console.log(`Headers:`);
-  console.dir(req.headers); // Use console.dir for better formatting
-  console.log(`Body:`);
-  console.dir(req.body);   // Access body data for POST requests (if applicable)
 
-  // Allow further processing in the request-response cycle
-  next();
+  // Capture relevant data for visitor tracking (replace with your selection)
+  const visitorData = {
+    method: req.method,
+    url: req.url,
+    IP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    userAgent: req.headers['user-agent'],
+  };
+
+  // Call DB_LINK logic (assuming it's a function that handles data storage)
+  try {
+    await DB_LINK(visitorData); // Pass the filtered visitorData object
+    next();
+  } catch (error) {
+    console.error('Error saving visitor data:', error);
+    // Handle errors appropriately (e.g., send error response)
+  }
 };
 
-// Apply the middleware to handle all requests
-app.use(logRequest);
+app.use(logRequestAndCaptureData);
 
 const BASE_URL ='https://api.weatherapi.com/v1'
 app.all('*', (req, res) => {
