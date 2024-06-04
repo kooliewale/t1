@@ -10,6 +10,8 @@ const IP='http://127.0.0.1';
 const PROJECT=process.env.PROJECT||'KT';
 const VERSION=process.env.VERSION|'v0.0.1';
 const serverStartTime = new Date();  
+
+const DB_LINK=require('./db_connect.js');
 app.use(bodyParser.json());
 app.use(cors());  
 
