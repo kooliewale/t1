@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors=require("cors");
 const axios = require('axios');
 const app = express(); 
-const { createClient } = require('@supabase/supabase-js');
+
 const PORT = process.env.PORT||4500; 
 const IP='http://127.0.0.1';
 const PROJECT=process.env.PROJECT||'KT';
@@ -12,9 +12,7 @@ const VERSION=process.env.VERSION|'v0.0.1';
 const serverStartTime = new Date();  
 app.use(bodyParser.json());
 app.use(cors());  
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 
 // Middleware function to log details for all requests
