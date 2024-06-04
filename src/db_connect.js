@@ -36,7 +36,7 @@ router.use((req, res, next) => {
   console.log(visitordata);
 
   supabase
-    .from('main-page-visitor')
+    .from('gpsdatatest')
     .insert([visitordata])
     .then(response1 => {
       console.log('Data sent to Supabase successfully:', response1);
