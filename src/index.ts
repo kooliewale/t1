@@ -1,9 +1,17 @@
-import { Hono } from 'hono'
+// app.js or where you configure your server
 
-const app = new Hono()
+import { Hono } from 'hono';
+import { handleGetPNRInfo, handleLiveTrain,handleRoute,handleTrainInfo } from './routes';
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono();
 
-export default app
+// Define routes
+app.all('/getPNRinfo', handleGetPNRInfo);
+app.all('/liveTrainInfo', handleLiveTrain);
+
+
+app.all('/getRoute',handleRoute);
+app.all('/getTrainInfo',handleTrainInfo);
+
+
+export default app;
